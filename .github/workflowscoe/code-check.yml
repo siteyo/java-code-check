@@ -1,0 +1,20 @@
+name: Code check
+
+on: [pull_request]
+
+jobs:
+  code_check:
+    runs-on: ubuntu-latest
+    name: Code check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: '8'
+      - name: Check coding rule
+        uses: dbelyaev/action-checkstyle@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          checkstyle_config: google_checks.xml
